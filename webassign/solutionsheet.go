@@ -6,7 +6,7 @@ import (
 )
 
 func CreateSolutionSheet() {
-	f, err := os.Create("solutions.md")
+	f, err := os.Create("solutions.txt")
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -15,11 +15,11 @@ func CreateSolutionSheet() {
 }
 
 func AppendToSolutions(text string) {
-	if _, err := os.Stat("solutions.md"); os.IsNotExist(err) {
+	if _, err := os.Stat("solutions.txt"); os.IsNotExist(err) {
 		CreateSolutionSheet()
 	}
 	
-	f, err := os.OpenFile("solutions.md", os.O_APPEND|os.O_WRONLY, 0600)
+	f, err := os.OpenFile("solutions.txt", os.O_APPEND|os.O_WRONLY, 0600)
 	if err != nil {
 		fmt.Println(err)
 	}
