@@ -3,8 +3,12 @@ package webassign
 import "fmt"
 
 func Title(title string) {
-	fmt.Printf("\n### %v ###################\n\n", title)
+	text := fmt.Sprintf("\n### %v ###################\n\n", title)
+	fmt.Print(text)
+	AppendToSolutions(text)
 }
 func Solve(problem string, solution interface{}) {
-	fmt.Printf("%v) %v\n", problem, solution)
+	text := fmt.Sprintf("%v) %v\n", problem, solution)
+	fmt.Print(text)
+	AppendToSolutions(text)
 }

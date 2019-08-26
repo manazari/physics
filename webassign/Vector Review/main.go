@@ -10,7 +10,9 @@ import (
 var solve = webassign.Solve
 
 func main() {
+	webassign.CreateSolutionSheet()
 	webassign.Title("VECTOR REVIEW")
+
 	section6()
 	section7()
 	section8()
@@ -28,6 +30,7 @@ func section6() {
 	solve("6b", c)
 	solve("6c", c.Unit().VectIJ())
 	fmt.Println("\n")
+	webassign.AppendToSolutions("\n")
 }
 
 func section7() {
@@ -54,6 +57,7 @@ func section7() {
 	solve("7g", dot(subtract(i.Scale(3), j), b))
 	solve("7h", dot(b.Unit(), b))
 	fmt.Println("\n")
+	webassign.AppendToSolutions("\n")
 }
 
 func section8() {
@@ -80,4 +84,5 @@ func section8() {
 	solve("8g", cross(subtract(i.Scale(3), j), b))
 	solve("8h", cross(b.Unit(), b))
 	fmt.Println("\n")
+	webassign.AppendToSolutions("\n")
 }
