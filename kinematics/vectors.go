@@ -44,9 +44,9 @@ func (v vector) Cross(v2 vector) (cross vector) {
 		v2 = append(v2, 0)
 	}
 	cross = Vector(
-		v[2]*v2[3]-v[3]*v2[2],
-		v[3]*v2[1]-v[1]*v2[3],
 		v[1]*v2[2]-v[2]*v2[1],
+		v[2]*v2[0]-v[0]*v2[2],
+		v[0]*v2[1]-v[1]*v2[0],
 	)
 	return
 }
