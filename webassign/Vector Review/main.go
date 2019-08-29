@@ -1,17 +1,14 @@
 package main
 
 import (
-	"fmt"
-
-	"github.com/manazari/physics/vector"
-	"github.com/manazari/physics/webassign"
+	"github.com/manazari/physics"
+	wa "github.com/manazari/physics/webassign"
 )
 
-var solve = webassign.Solve
+var solutions = wa.NewSolutionSheet("answers.txt")
 
 func main() {
-	webassign.CreateSolutionSheet()
-	webassign.Title("VECTOR REVIEW")
+	solutions.Title("VECTOR REVIEW")
 
 	section6()
 	section7()
@@ -20,69 +17,64 @@ func main() {
 
 func section6() {
 	var (
-		a = vector.VectIJ{3.62, 1.70}
-		b = vector.VectIJ{1.62, 3.50}
+		a = physics.Vector(3.62, 1.70)
+		b = physics.Vector(1.62, 3.50)
 	)
 
-	subtract := vector.Subtract
-	c := subtract(b.Vect(), a.Vect())
-	solve("6a", c.VectIJ())
-	solve("6b", c)
-	solve("6c", c.Unit().VectIJ())
-	fmt.Println("\n")
-	webassign.AppendToSolutions("\n")
+	c := b.Subtr(a)
+	solutions.Append(
+		"\n6a)\t", c,
+		"\n6b)\t", "Mag:", c.Mag(), "  Dir:", c.Theta(),
+		"\n6c)\t", c.Unit(),
+	)
 }
 
 func section7() {
 	var (
-		a = vector.Vect{10.8, 30}
-		b = vector.Vect{5.2, 53}
-		c = vector.Vect{12.2, 360 - 60}
-		d = vector.Vect{20.7, 180 - 37}
-		f = vector.Vect{20.7, 180 + 30}
+		a = physics.VectorMagDir(10.8, 30)
+		b = physics.VectorMagDir(5.2, 53)
+		c = physics.VectorMagDir(12.2, 360-60)
+		d = physics.VectorMagDir(20.7, 180-37)
+		f = physics.VectorMagDir(20.7, 180+30)
 
-		i = vector.Vect{1, 0}
-		j = vector.Vect{1, 90}
+		i = physics.VectorMagDir(1, 0)
+		j = physics.VectorMagDir(1, 90)
 	)
-
-	dot := vector.Dot
-	add := vector.Add
-	subtract := vector.Subtract
-	solve("7a", dot(a, c))
-	solve("7b", dot(a, f))
-	solve("7c", dot(d, c))
-	solve("7d", dot(a, add(f, c.Scale(2))))
-	solve("7e", dot(i, b))
-	solve("7f", dot(j, b))
-	solve("7g", dot(subtract(i.Scale(3), j), b))
-	solve("7h", dot(b.Unit(), b))
-	fmt.Println("\n")
-	webassign.AppendToSolutions("\n")
+	
+	solutions.Append(
+		"\n7a)\t", a.Dot(c),
+		"\n7a)\t", a.Dot(c),
+		"\n7b)\t", a.Dot(f),
+		"\n7c)\t", d.Dot(c),
+		"\n7d)\t", a.Dot(f.Add(c.Scale(2))),
+		"\n7e)\t", i.Dot(b),
+		"\n7f)\t", j.Dot(b),
+		"\n7g)\t", i.Scale(3).Subtr(j).Dot(b),
+		"\n7h)\t", b.Unit().Dot(b),
+	)
 }
 
 func section8() {
 	var (
-		a = vector.Vect{10.1, 30}
-		b = vector.Vect{5.5, 53}
-		c = vector.Vect{12.4, 360 - 60}
-		d = vector.Vect{20.1, 180 - 37}
-		f = vector.Vect{20.1, 180 + 30}
+		a = physics.VectorMagDir(10.1, 30)
+		b = physics.VectorMagDir(5.5, 53)
+		c = physics.VectorMagDir(12.4, 360-60)
+		d = physics.VectorMagDir(20.1, 180-37)
+		f = physics.VectorMagDir(20.1, 180+30)
 
-		i = vector.Vect{1, 0}
-		j = vector.Vect{1, 90}
+		i = physics.VectorMagDir(1, 0)
+		j = physics.VectorMagDir(1, 90)
 	)
 
-	cross := vector.Cross
-	add := vector.Add
-	subtract := vector.Subtract
-	solve("8a", cross(a, c))
-	solve("8b", cross(a, f))
-	solve("8c", cross(d, c))
-	solve("8d", cross(a, add(f, c.Scale(2))))
-	solve("8e", cross(i, b))
-	solve("8f", cross(j, b))
-	solve("8g", cross(subtract(i.Scale(3), j), b))
-	solve("8h", cross(b.Unit(), b))
-	fmt.Println("\n")
-	webassign.AppendToSolutions("\n")
+	solutions.Append(
+		"\n8a)\t", a.Cross(c),
+		"\n8a)\t", a.Cross(c),
+		"\n8b)\t", a.Cross(f),
+		"\n8c)\t", d.Cross(c),
+		"\n8d)\t", a.Cross(f.Add(c.Scale(2))),
+		"\n8e)\t", i.Cross(b),
+		"\n8f)\t", j.Cross(b),
+		"\n8g)\t", i.Scale(3).Subtr(j).Cross(b),
+		"\n8h)\t", b.Unit().Cross(b),
+	)
 }

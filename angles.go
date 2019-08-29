@@ -4,6 +4,7 @@ import "math"
 
 func toDeg(x float64) (deg float64) {
 	deg = x * 180 / math.Pi
+	deg = contain360(deg)
 	return
 }
 

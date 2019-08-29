@@ -5,32 +5,56 @@ import (
 	"os"
 )
 
-func CreateSolutionSheet() {
-	f, err := os.Create("solutions.txt")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	f.Close()
+var format = fmt.Sprintf
+
+func check(e error) {
+    if e != nil {
+        panic(e)
+    }
 }
 
-func AppendToSolutions(text string) {
-	if _, err := os.Stat("solutions.txt"); os.IsNotExist(err) {
-		CreateSolutionSheet()
-	}
-	
-	f, err := os.OpenFile("solutions.txt", os.O_APPEND|os.O_WRONLY, 0600)
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer f.Close()
-
-	if _, err = f.WriteString(text); err != nil {
-		fmt.Println(err)
-	}
+type solutionSheet struct {
+	Name        string
+	Body        string
+	initialized bool
 }
 
-func main() {
-	AppendToSolutions("dab")
+func NewSolutionSheet(name string) solutionSheet {
+	s := solutionSheet{name, "", false}
+	s.Init()
+	return s
 }
 
+func (s *solutionSheet) Init() {
+	f, err := os.Create(s.Name)
+	check(err)
+	s.initialized = true
+	check(f.Close())
+}
+
+func (s *solutionSheet) Append(lines ...interface{}) {
+	f, err := os.Create(s.Name)
+	check(err)
+
+	//newText := fmt.Sprintln(lines...)
+	newText := ""
+	for _, line := range lines {
+		if _, ok := line.(float64); ok {
+			newText += fmt.Sprintf("%5.2f ", line)
+			continue
+		}
+		newText += fmt.Sprintf("%v ", line)
+	}
+	newText += "\n"
+	fmt.Print(newText)
+	s.Body += newText
+
+	_, err = f.WriteString(s.Body)
+	check(err)
+
+	check(f.Close())
+}
+
+func (s *solutionSheet) Title(title string) {
+	s.Append(format("### %-15v ###############", title))
+}
